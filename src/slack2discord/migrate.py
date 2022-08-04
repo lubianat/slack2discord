@@ -5,7 +5,7 @@ from discord.ext import commands
 import json
 import time
 from pathlib import Path
-from TOKEN_LIST import bot_token
+from TOKENS import bot_token
 import discord
 import datetime
 
