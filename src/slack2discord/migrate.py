@@ -3,10 +3,8 @@
 import datetime
 from discord.ext import commands
 import json
-import time
 from pathlib import Path
 from TOKENS import bot_token
-import discord
 import datetime
 
 HERE = Path(__file__).parent.resolve()
@@ -20,7 +18,12 @@ MAIN = Path(
 
 @bot.command(pass_context=True)
 async def slack2discord(context):
-    channel_name = "tema-dados"
+    names = [x.stem for x in MAIN.iterdir() if x.is_dir()]
+    for name in names:
+        await migrate_channel(context, name)
+
+
+async def migrate_channel(context, channel_name):
     guild = context.message.guild
     await guild.create_text_channel(channel_name)
     NOW = MAIN.joinpath(channel_name)
@@ -50,7 +53,6 @@ async def slack2discord(context):
 
                 flag = 1
             if "user_profile" in message and "text" in message:
-
                 real_name = message["user_profile"]["real_name"]
                 message_text = message["text"]
                 if last_user == real_name:
@@ -58,7 +60,10 @@ async def slack2discord(context):
                 else:
                     message_to_send = f"**{real_name}** - {message_text}"
                     last_user = real_name
-                await channel.send(message_to_send)
+                try:
+                    await channel.send(message_to_send)
+                except:
+                    pass
 
 
 print("Running bot")
