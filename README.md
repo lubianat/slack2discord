@@ -54,6 +54,6 @@ This file shouldn't be committed to github and is automatically on gitignore.
 
 Now run the script on the command line ("python3 migrate.py"). 
 
-The bot will now be active and listening. To effectively migrate, go on any discord channel and post the message "!slack2discord". The bot will start running.
+The bot will now be active and listening. To effectively migrate, go on any discord channel and post the message "!slack2discord". The bot will start creating new channels and adding the information from the Slack workspace.
 
 
